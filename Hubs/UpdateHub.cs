@@ -7,7 +7,7 @@ public class UpdateHub : Hub
     public async Task startUpdates()
     {
         var message = "";
-        for (int i = 0; i < 11; i++)
+        for (int i = 1; i < 11; i++)
         {
             message = "Message " + i;
             await Clients.All.SendAsync("messageReceived", message);
