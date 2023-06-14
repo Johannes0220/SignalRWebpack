@@ -1,7 +1,7 @@
 using SignalRWebpack.Hubs;
 var builder = WebApplication.CreateBuilder(args);
-//SignalR Hinzufügen
-builder.Services.AddSignalR();
+//Add SignalR to Services
+
 
 var app = builder.Build();
 
@@ -9,6 +9,7 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.MapHub<UpdateHub>("/hub");
+//register hub with URL
+
 
 app.Run();
