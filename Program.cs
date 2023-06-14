@@ -1,4 +1,4 @@
-using SignalRWebpack.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 //Add SignalR to Services
 
