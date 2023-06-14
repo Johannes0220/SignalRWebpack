@@ -1,7 +1,7 @@
 using SignalRWebpack.Hubs;
 var builder = WebApplication.CreateBuilder(args);
-//SignalR Hinzufügen
-builder.Services.AddSignalR();
+//Add signalR to the services
+
 
 var app = builder.Build();
 
@@ -9,6 +9,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.MapHub<ChatHub>("/hub");
+//Map the Hub class to a path
 
 app.Run();

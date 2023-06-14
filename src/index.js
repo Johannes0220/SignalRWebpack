@@ -1,21 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var signalR = require("@microsoft/signalr");
 require("./css/main.css");
 var divMessages = document.querySelector("#divMessages");
 var tbMessage = document.querySelector("#tbMessage");
 var btnSend = document.querySelector("#btnSend");
 var username = "My User";
-var connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hub")
-    .build();
-connection.on("messageReceived", function (username, message) {
-    var m = document.createElement("div");
-    m.innerHTML = "<div class=\"message-author\">".concat(username, "</div><div>").concat(message, "</div>");
-    divMessages.appendChild(m);
-    divMessages.scrollTop = divMessages.scrollHeight;
-});
-connection.start().then(function () { return username = connection.connectionId; }).catch(function (err) { return document.write(err); });
+//Create a connection object to the path specified in the packend
+//create a method the server can call to send a message to the client.
+//It should display the message sent in the divmessages element of index.hmtl
+//Start the connection, !!!Advanced!!! use the connections ConnectionId to assign usernames to different clients
 tbMessage.addEventListener("keyup", function (e) {
     if (e.key === "Enter") {
         send();
@@ -23,6 +16,5 @@ tbMessage.addEventListener("keyup", function (e) {
 });
 btnSend.addEventListener("click", send);
 function send() {
-    connection.send("newMessage", username, tbMessage.value)
-        .then(function () { return (tbMessage.value = ""); });
+    //Send your message using your server method
 }
