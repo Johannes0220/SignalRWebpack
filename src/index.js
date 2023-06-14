@@ -5,10 +5,11 @@ require("./css/main.css");
 var divMessages = document.querySelector("#divMessages");
 var tbMessage = document.querySelector("#tbMessage");
 var btnSend = document.querySelector("#btnSend");
-var username = "Dein Mudda";
+var username = "My User";
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/hub")
     .build();
+username = connection.connectionId;
 connection.on("messageReceived", function (username, message) {
     var m = document.createElement("div");
     m.innerHTML = "<div class=\"message-author\">".concat(username, "</div><div>").concat(message, "</div>");

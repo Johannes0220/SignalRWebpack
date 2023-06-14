@@ -4,12 +4,12 @@ import "./css/main.css";
 const divMessages: HTMLDivElement = document.querySelector("#divMessages");
 const tbMessage: HTMLInputElement = document.querySelector("#tbMessage");
 const btnSend: HTMLButtonElement = document.querySelector("#btnSend");
-const username = "Dein Mudda"
+let username = "My User"
 
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("/hub")
     .build();
-
+ 
 connection.on("messageReceived", (username: string, message: string) => {
   const m = document.createElement("div");
 
@@ -19,7 +19,7 @@ connection.on("messageReceived", (username: string, message: string) => {
   divMessages.scrollTop = divMessages.scrollHeight;
 });
 
-connection.start().catch((err) => document.write(err));
+connection.start().then(()=>username=connection.connectionId).catch((err) => document.write(err));
 
 tbMessage.addEventListener("keyup", (e: KeyboardEvent) => {
   if (e.key === "Enter") {
