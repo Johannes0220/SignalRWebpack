@@ -6,13 +6,20 @@ const tbMessage: HTMLInputElement = document.querySelector("#tbMessage");
 const btnSend: HTMLButtonElement = document.querySelector("#btnSend");
 let username = "My User"
 
-//Create a connection object to the path specified in the packend
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/hub")
+    .build();
  
-//create a method the server can call to send a message to the client.
-//It should display the message sent in the divmessages element of index.hmtl
+connection.on("messageReceived", (username: string, message: string) => {
+  const m = document.createElement("div");
 
-//Start the connection, !!!Advanced!!! use the connections ConnectionId to assign usernames to different clients
+  m.innerHTML = `<div class="message-author">${username}</div><div>${message}</div>`;
 
+  divMessages.appendChild(m);
+  divMessages.scrollTop = divMessages.scrollHeight;
+});
+
+connection.start().then(()=>username=connection.connectionId).catch((err) => document.write(err));
 
 tbMessage.addEventListener("keyup", (e: KeyboardEvent) => {
   if (e.key === "Enter") {
@@ -23,6 +30,6 @@ tbMessage.addEventListener("keyup", (e: KeyboardEvent) => {
 btnSend.addEventListener("click", send);
 
 function send() {
-  //Send your message using your server method
-
+  connection.send("newMessage", username, tbMessage.value)
+    .then(() => (tbMessage.value = ""));
 }
